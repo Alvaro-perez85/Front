@@ -1,0 +1,86 @@
+<ion-searchbar  showcancelbutton="" (ionInput)="filterList($event)"></ion-searchbar>
+
+<table class="table-busqueda-general">
+  <thead>
+    <tr>
+      <th>Nombre Comercial</th>
+      <th>Código Cliente</th>
+      <th>Email</th>
+      <th>Número de Equipos</th>
+      <!-- <th>Contacto</th> -->
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let client of clientsListSearched">
+      <td>
+        <ngb-highlight [result]="client.nombreComercial" [term]="searchTerm"></ngb-highlight>        
+      </td>
+      <td>
+        {{client.codigoCustomer}} 
+      </td>
+      <td>
+        {{ client.email }}        
+      </td>
+      <td>
+        {{client.equipments.length}}        
+      </td>
+      <!-- <td>
+        <ion-list *ngFor="let contact of client.contacts">
+          <ion-item>
+              {{contact.name}} {{contact.surname}} - {{ contact.email}} 
+          </ion-item>    
+        </ion-list>
+      </td> -->
+      <td class="ver-equipo-columna">
+        <button class="ver-equipo" (click)="gotoClient(client)">
+          <img src="./assets/img/ver-equipo.png">
+          <span class="texto-ver-equipo">ver equipo</span>
+        </button>           
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- 
+<ngb-accordion #acc="ngbAccordion" >
+  <ngb-panel *ngFor="let client of clientsListSearched">
+    <ng-template ngbPanelTitle>       
+              
+    </ng-template>
+    <ng-template ngbPanelContent>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Código Cliente : 
+          </ion-col>
+          <ion-col>
+            Nombre Comercial : {{client.nombreComercial}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Email : 
+          </ion-col>
+          <ion-col>
+            Número de equipos : 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Contactos :
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+         
+    </ng-template>
+  </ngb-panel>    
+ 
+</ngb-accordion> -->

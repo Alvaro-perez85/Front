@@ -1,0 +1,168 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,500&display=swap');
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+button:focus{
+    outline:none;
+}
+
+.nav-pills + .tab-content{
+    width: 100%;
+}
+
+
+
+.general-container .ion-page {
+    display: block !important;
+    overflow: auto !important;
+    /*por qué no salen los backgrounds? background-image: url("../../../assets/img/fondo.png");*/
+   
+}
+
+.general-container .fondo-tdi{
+    width:100vw;
+    height:100vh;
+    object-fit: cover;
+    
+}
+
+
+.menu-tdi-sac ul.listado-menu-sac{
+    display:flex;
+    margin:0px;
+    padding:0px;
+}
+
+.menu-tdi-sac ul.listado-menu-sac li{
+    width:78px;
+    height:78px;
+    list-style:none;
+    
+}
+
+.menu-tdi-sac ul.listado-menu-sac .logo-tdi{
+    margin: auto;
+}
+
+
+/*estableciendo estilos sobre Navbar*/
+
+.searchbar-input-container.sc-ion-searchbar-ios {
+    height: 55px;
+}
+
+
+.searchbar-input-container{
+    --icon-color:#1d71b8;
+    width: 80%!important;
+    margin:auto;
+    --background:rgba(255,255,255, .58);
+    --box-shadow:-1px 1px 20px rgba(26,86,122, .58)!important;
+ 
+
+}
+
+.sc-ion-searchbar-ios-h{
+    padding: 67px !important;;
+}
+
+ion-searchbar{
+    --icon-color: var (--ion-color-primary);
+    --box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    --border-radius:40px!important;
+      margin:10% auto;
+      width:80%;
+      --icon-color:#1d71b8;
+      height:55px;
+      padding: 10px 45px;
+      height: 50px;
+     
+  
+
+
+    :ng-deep{
+        .searchbar-input-container{  
+            background-color: red !important;          
+            .searchbar-input{ 
+                border-radius: 20px!important;
+                width:80%;
+                //any style that you want to implement on your searchbar
+            }
+        }
+    }   
+}
+
+.searchbar-search-icon{
+    :ng-deep{
+        .icon-inner{  
+            background-color: red !important;          
+        }
+    }   
+
+}
+
+/*se estilan las tablas de busquega general*/
+
+.table-busqueda-general{
+    background-color:rgba(255,255,255, 0.63);
+    border-radius: 30px;
+    width:80%;
+    margin:auto;
+}
+
+.table-busqueda-general tr{
+    width:90%;
+}
+
+.table-busqueda-general td, th{
+    padding: 16px;
+    font-weight: bold;
+    color: rgba(18, 71, 107, 0.63);
+    border-bottom: 1px solid #1d71b8;
+    max-width: 260px;
+    font-size:12px;
+}
+
+.table-busqueda-general button{
+    background-color: transparent;
+}
+
+.table-busqueda-general .ver-equipo-columna{
+    position:relative;
+}
+
+
+
+.table-busqueda-general .ver-equipo-columna .texto-ver-equipo{
+  font-size: 9px !important;
+  color:#1d71b8!important;
+  font-weight:900;
+}

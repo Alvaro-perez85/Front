@@ -1,0 +1,44 @@
+<ion-item>
+  <ion-label>Estanqueidad correcta</ion-label>
+  <ion-toggle  [(ngModel)]="isTightnessCorrect" ></ion-toggle>
+</ion-item>
+
+
+
+<ion-list padding *ngIf="!isTightnessCorrect" > 
+  <ion-item *ngFor="let item of [].constructor(3); let i = index" >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Toma {{i}}</ion-card-subtitle>          
+      </ion-card-header>    
+      <ng-container>
+      <ion-card-content>
+        <ion-item>         
+          <ion-label>03</ion-label>
+          <ion-input type="number" ></ion-input>         
+          <ion-input type="number" ></ion-input>
+        </ion-item>
+        <ion-item>         
+          <ion-label>05</ion-label>
+          <ion-input type="number" ></ion-input>         
+          <ion-input type="number" ></ion-input>
+        </ion-item>
+        <ion-item>         
+          <ion-label>1</ion-label>
+          <ion-input type="number" ></ion-input>         
+          <ion-input type="number" ></ion-input>
+        </ion-item>
+        <ion-item>         
+          <ion-label>5</ion-label>
+          <ion-input type="number" ></ion-input>         
+          <ion-input type="number" ></ion-input>
+        </ion-item>
+       
+       
+      </ion-card-content>
+     </ng-container>
+    </ion-card> 
+
+  </ion-item>
+</ion-list>
+

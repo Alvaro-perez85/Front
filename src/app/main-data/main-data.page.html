@@ -1,0 +1,159 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>SISTEMA SAC Mantenimientos</ion-title>
+  </ion-toolbar> 
+</ion-header>
+
+<ion-content>  
+  <ion-card>
+    <ion-card-header>     
+      <ion-card-subtitle>Seleccion Cliente</ion-card-subtitle>      
+    </ion-card-header>
+  
+    <ion-card-content>
+      <!--
+        <ion-searchbar (ionInput)="filterList($event)"></ion-searchbar>
+      -->
+      
+      <!--
+        <ion-label>Clientes</ion-label>
+        <ionic-selectable        
+          [(ngModel)]="selectedClient"
+          [items]="clientsList"
+          itemValueField="customerId"
+          itemTextField="nombreComercial"
+          [canSearch]="true"
+          (onChange)="onselectedClientChange($event)">
+        </ionic-selectable>
+      -->
+      
+      
+      <!--
+       <ion-select  [(ngModel)]="selectedClient"  (ionChange)="onselectedClientChange()">
+        <ion-select-option *ngFor="let client of clientsList;" [value]="client" >{{client.nombreComercial}}</ion-select-option>    
+      </ion-select>
+
+      -->
+   
+
+      <ion-label *ngIf="selectedClient">Equipos</ion-label> 
+      <ion-select  [(ngModel)]="selectedEquipment" *ngIf="selectedClient" (ionChange)="onselectedEquipmentChange()" >
+        <ion-select-option *ngFor="let equip of selectedClient.equipments ;" [value]="equip" >{{equip.modelName}} - {{equip.numSerie}}  -</ion-select-option>    
+      </ion-select> 
+      
+      <ion-label *ngIf="selectedEquipment">Mantenimientos</ion-label> 
+      <ion-select  [(ngModel)]="selectedMaintenance" *ngIf="selectedEquipment" (ionChange)="onselectedmaintenanceChange()" >
+        <ion-select-option *ngFor="let mant of selectedEquipment.maintenances ;" [value]="mant" >{{mant.numeroMantenimiento}}</ion-select-option>    
+      </ion-select>     
+
+
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card *ngIf="selectedClient && selectedEquipment">
+    <ion-card-header>
+      <ion-card-subtitle>Cliente <strong>{{selectedClient.nombreComercial}}</strong> Equipos <strong>{{selectedEquipment.modelName}}</strong></ion-card-subtitle>     
+      <ion-card-title>Número Mantenimiento :  {{ selectedMaintenance.numeroMantenimiento }}</ion-card-title>      
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form [formGroup]="mainDataForm" (ngSubmit)="onSubmit()" >
+    
+        <ion-item>
+          <ion-label>Mantenimiento Enac</ion-label>
+          <ion-toggle formControlName="maintenanceEnac" ></ion-toggle>
+        </ion-item>
+      
+        <ion-list>
+          <ion-radio-group ngDefaultControl  formControlName="maintenanceType">
+            <ion-list-header>
+              <ion-label>
+                Mantenimiento
+              </ion-label>
+            </ion-list-header>
+        
+            <ion-item>
+              <ion-label>NT</ion-label>
+              <ion-radio value="NT" ></ion-radio>
+            </ion-item>
+        
+            <ion-item>
+              <ion-label>PR</ion-label>
+              <ion-radio value="PR" ></ion-radio>
+            </ion-item>   
+           
+          </ion-radio-group>
+        </ion-list>
+        
+        <ion-item>
+          <ion-label>Usuario</ion-label>
+          <ion-select placeholder="Select One"  formControlName="user" >
+            <ion-select-option *ngFor="let user of usersList;" [value]="user.usrId" >{{ user.usrName}}</ion-select-option>
+          </ion-select>
+        </ion-item>    
+      
+      
+        <ion-item>
+          <ion-label>Fecha Ensayo</ion-label>
+          <ion-datetime  formControlName="tryDate" value="2021-02-19" placeholder="Select Date"></ion-datetime>
+        </ion-item>
+    
+    
+     
+          
+        
+          <ion-item>
+            <ion-label>Tecnico</ion-label>
+            <ion-select placeholder="Select One"  formControlName="technician" >
+              <ion-select-option *ngFor="let technician of techniciansList;" [value]="technician.tecnicoId" >{{technician.nombre}} {{technician.apellidos}} </ion-select-option>
+            </ion-select>
+          </ion-item>
+        
+      
+        <ion-list>
+          
+            <ion-list-header>
+              <ion-label>
+                Mediciones
+              </ion-label>
+            </ion-list-header>
+        
+    
+            <ion-item *ngIf="selectedEquipment.group?.particulas === 1" >
+              <ion-label>Particulas</ion-label>
+              
+              <ion-select placeholder="Select One"  formControlName="particlesMeasurer" >
+                <ion-select-option *ngFor="let particlesMeasurer of particlesMeasurersList;" [value]="particlesMeasurer.medidorId" >{{particlesMeasurer.descripcion}} </ion-select-option>           
+              </ion-select>
+            </ion-item>
+    
+            <ion-item  *ngIf="selectedEquipment.group?.velocidadLami === 1" >
+              <ion-label>Velocidad</ion-label>
+             
+              <ion-select placeholder="Select One"  formControlName="velocityMeasurer" >
+                <ion-select-option *ngFor="let measurer of velocitiesMeasurersList;" [value]="measurer.medidorId" >{{measurer.descripcion}} </ion-select-option>
+               </ion-select>
+            </ion-item>
+    
+    
+            <ion-item *ngIf="selectedEquipment.group?.presion === 1" >
+              <ion-label>Presión</ion-label>
+             
+              <ion-select placeholder="Select One"  formControlName="preasureMeasurer" >
+                <ion-select-option *ngFor="let measurer of preasuresMeasurersList;" [value]="measurer.medidorId" >{{measurer.descripcion}} </ion-select-option>           
+               </ion-select>
+            </ion-item>
+    
+            <ion-item *ngIf="hasTightness()" >
+              <ion-label>Estanqueidad</ion-label>
+              <!--<ion-checkbox slot="end" formControlName="tightness"></ion-checkbox>-->
+            </ion-item>
+        </ion-list>
+       
+      
+        <button type="submit" [disabled]="!mainDataForm.valid">Enviar</button>
+      </form>
+      
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,78 @@
+<h3>Datos cálculo puntos de muestra</h3>
+<form [formGroup]="particlesForm" (ngSubmit)="onSubmit()">
+  <div class="container" >
+    <div class="row">
+      <div class="col">
+        <ion-label >Largo</ion-label>
+        <ion-input  placeholder="Introduce medida" type="number" formControlName="Largo"></ion-input>
+      </div>
+      <div class="col">
+        <ion-label >Profundidad</ion-label>
+        <ion-input  placeholder="Introduce medida" type="number" formControlName="Profundo"></ion-input>
+      </div>
+      <div class="col">
+        <ion-label >Area</ion-label>
+        <ion-input  placeholder="Introduce medida" type="number" formControlName="Area"></ion-input>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ion-label >Comentario</ion-label>
+      <ion-textarea formControlName="Comentario"></ion-textarea>
+    </div>
+
+  </div>
+ 
+</form>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ion-label>Número de puntos {{numberPoints}}</ion-label>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-outline-success" (click)="addDetalle()">añadir punto </button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger" (click)="removeDetalle()">quitar punto </button>
+    </div>
+  </div>
+</div>
+
+<ion-list padding *ngFor="let detalle of Detalles?.controls;let i= index"> <!-- let item of [].constructor(numberPoints); let i = index-->
+  <ion-item >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Punto {{i+ 1}}</ion-card-subtitle>          
+      </ion-card-header>    
+      <ng-container [formGroup]="castAsFormGroup(detalle)">
+      <ion-card-content *ngIf="dataService.particlesMeasurerSelected">
+        <ion-item *ngIf="dataService.particlesMeasurerSelected?.puntoParticulas03==1">          
+          <ion-label position="stacked">Particulas 0.3 μm</ion-label>
+          <ion-input type="number"  placeholder="Introduce medida" formControlName="Med03"></ion-input>          
+        </ion-item>
+        <ion-item *ngIf="dataService.particlesMeasurerSelected?.puntoParticulas05==1">          
+          <ion-label position="stacked">Particulas 0.5 μm</ion-label>
+          <ion-input type="number"   placeholder="Introduce medida" formControlName="Med05" ></ion-input>         
+        </ion-item>
+
+        <ion-item *ngIf="dataService.particlesMeasurerSelected?.puntoParticulas1==1">          
+          <ion-label position="stacked">Particulas 1 μm</ion-label>
+          <ion-input type="number"   placeholder="Introduce medida" formControlName="Med1" ></ion-input>         
+        </ion-item>
+
+        <ion-item *ngIf="dataService.particlesMeasurerSelected?.puntoParticulas5==1">          
+          <ion-label position="stacked">Particulas 5 μm</ion-label>
+          <ion-input type="number"   placeholder="Introduce medida" formControlName="Med5" ></ion-input>         
+        </ion-item>
+       
+      </ion-card-content>
+     </ng-container>
+    </ion-card> 
+
+  </ion-item>
+</ion-list>
+

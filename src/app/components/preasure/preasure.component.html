@@ -1,0 +1,61 @@
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Sala en funcionamiento previa durante al menos 5 minutos</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Se ha puesto A CERO el Manómetro
+      </ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Positiva o negativa (Marcado: Positivo)
+      </ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+   
+  </ion-list>
+  <form [formGroup]="preasureForm" >
+
+  
+    <ion-list padding *ngFor="let item of [].constructor(5); let i = index">
+      <ion-item >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Punto {{i}}</ion-card-subtitle>          
+          </ion-card-header>    
+        
+          <ion-card-content>
+            <ion-item>          
+              <ion-label>Presión Leida</ion-label>
+              <ion-input type="number" ></ion-input>
+              <ion-label>Presión Corregida</ion-label>
+              <ion-input type="number" ></ion-input>
+            </ion-item>         
+           
+          </ion-card-content>
+        </ion-card> 
+  
+      </ion-item>
+    </ion-list>
+
+
+
+    <ion-item>
+      <ion-label >Media</ion-label>
+      <ion-input  type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label >Incertidumbre</ion-label>
+      <ion-input  type="number" ></ion-input>
+    </ion-item>
+    
+  </form>
+  
+
+
+

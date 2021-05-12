@@ -1,0 +1,323 @@
+
+<button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+  ?
+</button>
+<ng-template #popContent>{{ selectedEquipment.maintenances.length}} ensayos hechos</ng-template>
+<ng-template #popTitle>
+ <p>Último ensayo</p>
+  <ul>
+    <li><h3> {{ lastMaintenance.numeroMantenimiento }}</h3></li>
+    <li>Nº de Serie del Centro : {{ lastMaintenance.numIdentificacion }}</li>
+    <li>Operario : {{ lastMaintenance.tecnico?.nombre }}  {{ lastMaintenance.tecnico?.apellidos }} {{ lastMaintenance.tecnico?.telefono }}</li>
+    <li>Departamento : {{ lastMaintenance.peticionario?.depart }} </li>
+    <li>Resultado del ultimo ensayo {{ lastMaintenance.resumenEstado == 1 ? 'Correcto' : 'Incorrecto' }} </li>
+  </ul>  
+  <button type="button" (click)="updateMaintenance()">copiar datos </button>
+</ng-template> 
+
+
+
+<div class="d-flex">
+  <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
+    <li ngbNavItem="top">
+      <a ngbNavLink>Datos</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+
+          <div class="container pt-3" >
+
+            <div class="row">
+              <div class="col-sm">
+                <ion-label>Mantenimiento Enac</ion-label>
+              </div>
+              <div class="col-sm">               
+                <ion-toggle formControlName="maintenanceEnac"></ion-toggle>
+              </div>
+              <div class="col-sm">
+                <ion-label>Mantenimiento </ion-label>
+              </div>
+              <ion-radio-group ngDefaultControl formControlName="maintenanceType">
+                <div class="col-sm">                  
+                    <ion-label>NT</ion-label>
+                    <ion-radio value="NT"></ion-radio>                                 
+                </div>
+                <div class="col-sm">
+                  <ion-label>PR</ion-label>
+                  <ion-radio value="PR"></ion-radio>
+                </div>      
+              </ion-radio-group>              
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <ion-label>Peticionario</ion-label>
+                <ion-select placeholder="Seleccionar " formControlName="PeticionarioId">
+                  <ion-select-option *ngFor="let petitioner of petitionaryList;" [value]="petitioner.customerContactId">
+                    {{ petitioner.name }} {{ petitioner.surname }} ({{ petitioner.email }} )
+                  </ion-select-option>
+                </ion-select>
+              </div>
+              <div class="col">
+                <ion-label>Tecnico</ion-label>
+                <ion-select placeholder="Seleccionar" formControlName="TecnicoId">
+                  <ion-select-option *ngFor="let technician of techniciansList;" [value]="technician.tecnicoId">
+                    {{technician.nombre}} {{technician.apellidos}} 
+                  </ion-select-option>
+                </ion-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <ion-label>Fecha Ensayo</ion-label>
+                <ion-datetime  formControlName="FechaEnsayo"  placeholder="Selecciona fecha"></ion-datetime>
+              </div>
+              <div class="col">
+                <ion-label>F.P. Ensayo</ion-label>
+                <ion-datetime  formControlName="FechaProximoEnsayo"  placeholder="Selecciona fecha"></ion-datetime>
+              </div>
+            </div> 
+           
+            <div class="row">
+              <div class="col">               
+                <ion-select placeholder="Selecionar Clasificacion ISO a utilizar" formControlName="IsoId">
+                  <ion-select-option *ngFor="let iso of isosList;" [value]="iso.isoId">
+                    {{iso.descripcion}} 
+                  </ion-select-option>
+                </ion-select>
+              </div>
+              <div class="col">
+                {{ isoValues(maintenanceForm.get('IsoId').value)}}
+              </div>
+            </div>
+
+            
+            <div class="row">
+              <div class="col">
+                <ion-input formControlName="Laboratorio" placeholder="Laboratorio" ></ion-input>
+              </div>
+              <div class="col">
+                <ion-input type="number" formControlName="AnnoConstruccion" placeholder="Años construcción" ></ion-input>
+              </div>
+              <div class="col">
+                <ion-input formControlName="Sala" placeholder="Sala" ></ion-input>
+              </div>
+              <div class="col">
+                <ion-input formControlName="NumIdentificacion" placeholder="Número sala" ></ion-input>
+              </div>
+            </div>
+            
+          
+
+          </div>
+          
+    
+          <ion-list>
+            <ion-list-header>
+              <ion-label>
+                Mediciones
+              </ion-label>
+            </ion-list-header>
+    
+            <ion-item *ngIf="selectedEquipment.group?.particulas === 1">
+              <ion-label>Particulas</ion-label>
+    
+              <ion-select placeholder="Select One" formControlName="MedidorParticulasId">
+                <ion-select-option *ngFor="let particlesMeasurer of particlesMeasurersList;"
+                  [value]="particlesMeasurer.medidorId">{{particlesMeasurer.descripcion}} </ion-select-option>
+              </ion-select>
+            </ion-item>
+    
+            <ion-item *ngIf="selectedEquipment.group?.velocidadLami === 1">
+              <ion-label>Velocidad</ion-label>
+    
+              <ion-select placeholder="Select One" formControlName="MedidorVelocidadId">
+                <ion-select-option *ngFor="let measurer of velocitiesMeasurersList;" [value]="measurer.medidorId">
+                  {{measurer.descripcion}} </ion-select-option>
+              </ion-select>
+            </ion-item>
+    
+            <ion-item *ngIf="selectedEquipment.group?.presion === 1">
+              <ion-label>Presión</ion-label>
+    
+              <ion-select placeholder="Select One" formControlName="MedidorPresionId">
+                <ion-select-option *ngFor="let measurer of preasuresMeasurersList;" [value]="measurer.medidorId">
+                  {{measurer.descripcion}} </ion-select-option>
+              </ion-select>
+            </ion-item>
+            
+            <ion-item *ngIf="selectedEquipment.group?.estanqueidad === 1">
+              <ion-label>Estanqueidad</ion-label>
+              <ion-select placeholder="Select One" formControlName="MedidorEstanqueId">
+                <ion-select-option *ngFor="let measurer of tightnessMeasurersList;" [value]="measurer.medidorId">
+                  {{measurer.descripcion}} </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+    
+    
+          <button type="submit" [disabled]="!maintenanceForm.valid">Enviar</button>
+         
+        </form>
+      </ng-template>
+    </li>
+    <li ngbNavItem="particulas" *ngIf="selectedEquipment.group?.particulas === 1">
+      <a ngbNavLink>Particulas</a>
+      <ng-template ngbNavContent>
+        <app-particles [particlesForm] ="particlesForm" ></app-particles>
+      </ng-template>
+    </li>
+    <li ngbNavItem="velocidades" *ngIf="selectedEquipment.group?.velocidadLami === 1">
+      <a ngbNavLink>Laminaridad</a>
+      <ng-template ngbNavContent>
+        <app-laminarity [velocitiesForm] ="velocitiesForm"></app-laminarity>
+      </ng-template>
+    </li>
+    <li ngbNavItem="presiones" *ngIf="selectedEquipment.group?.presion === 1">
+      <a ngbNavLink>Presiones</a>
+      <ng-template ngbNavContent>
+       <app-preasure [preasureForm] ="preasuresForm"></app-preasure>    
+      </ng-template>
+    </li>
+    <li ngbNavItem="estanqueidad" *ngIf="selectedEquipment.group?.estanqueidad === 1">
+      <a ngbNavLink>Estanqueidad</a>
+      <ng-template ngbNavContent>
+        <app-tightness></app-tightness>
+      </ng-template>
+    </li>
+    <li ngbNavItem="recirculaciones" *ngIf="selectedEquipment.group?.recirculaciones === 1">
+      <a ngbNavLink>Recirculación</a>
+      <ng-template ngbNavContent>
+        <app-recirculation></app-recirculation>
+      </ng-template>
+    </li>
+    <li ngbNavItem="others" >
+      <a ngbNavLink>Otras Mediciones</a>
+      <ng-template ngbNavContent>
+        <app-others></app-others>
+      </ng-template>
+    </li>
+   
+
+    
+
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="ml-4"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+ <!-- 
+
+          <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+
+
+  
+            <ion-item>
+              <ion-label>Mantenimiento Enac</ion-label>
+              <ion-toggle formControlName="mantenimientoEnac" ></ion-toggle>
+            </ion-item>
+          
+            <ion-radio-group value="biff">
+              
+                <ion-label>Mantenimiento</ion-label> 
+                <ion-label>NT</ion-label>
+                <ion-radio slot="start" value="NT"></ion-radio>
+                <ion-label>PR</ion-label>
+                <ion-radio slot="start" value="PR"></ion-radio>    
+           
+            </ion-radio-group>
+          
+          
+            <ion-label>Peticionario</ion-label>
+            <ion-select value="2" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="1">Usuario 1</ion-select-option>
+              <ion-select-option value="2">Usuario 2</ion-select-option>
+              <ion-select-option value="3">Usuario 3</ion-select-option>
+              <ion-select-option value="4">Usuario 4</ion-select-option>
+            </ion-select>
+          
+          
+            <ion-item>
+              <ion-label>Fecha Ensayo</ion-label>
+              <ion-datetime value="1990-02-19" placeholder="Select Date"></ion-datetime>
+            </ion-item>
+          
+            <label>
+              First Name:
+              <input type="text" formControlName="firstName" required>
+            </label>
+          
+            <label>
+              Last Name:
+              <input type="text" formControlName="lastName">
+            </label>
+          
+            <div formGroupName="address">
+              <h3>Address</h3>
+          
+              <label>
+                Street:
+                <input type="text" formControlName="street">
+              </label>
+          
+              <label>
+                City:
+                <input type="text" formControlName="city">
+              </label>
+              
+              <label>
+                State:
+                <input type="text" formControlName="state">
+              </label>
+          
+              <label>
+                Zip Code:
+                <input type="text" formControlName="zip">
+              </label>
+            </div>
+          
+            <div formArrayName="aliases">
+              <h3>Aliases</h3> <button (click)="addAlias()">Add Alias</button>
+          
+              <div *ngFor="let alias of aliases.controls; let i=index">
+                
+                <label>
+                  Alias:
+                  <input type="text" [formControlName]="i">
+                </label>
+              </div>
+            </div>
+          
+            <button type="submit" [disabled]="!maintenanceForm.valid">Submit</button>
+          </form>
+          
+          <hr>
+          
+          <p>
+            Form Value: {{ maintenanceForm.value | json }}
+          </p>
+          
+          
+          <p>
+            Form Status: {{ maintenanceForm.status }}
+          </p>
+          
+          <p>
+            <button (click)="updateProfile()">Update Profile</button>
+          </p>
+        --> 
+          
+          <!-- 
+          Copyright Google LLC. All Rights Reserved.
+          Use of this source code is governed by an MIT-style license that
+          can be found in the LICENSE file at https://angular.io/license
+          -->
+          

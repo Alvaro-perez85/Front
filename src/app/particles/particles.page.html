@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Particles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3>Datos cálculo puntos de muestra</h3>
+  <form [formGroup]="particlesForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label >Largo</ion-label>
+      <ion-input  type="number" formControlName="lengthness"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label >Profundidad</ion-label>
+      <ion-input  type="number" formControlName="deepness"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label >Area</ion-label>
+      <ion-input  type="number" formControlName="area"></ion-input>
+    </ion-item>
+  </form>
+
+  <ion-item>
+    <ion-label position="stacked">Número de puntos</ion-label>
+    <ion-input type="number" [(ngModel)]="numberPoints" ></ion-input>
+  </ion-item> 
+
+  <ion-list padding *ngFor="let item of [].constructor(numberPoints); let i = index">
+    <ion-item >
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Punto {{i}}</ion-card-subtitle>          
+        </ion-card-header>    
+      
+        <ion-card-content>
+          <ion-item>
+            0.3
+            <ion-label>p3</ion-label>
+            <ion-input type="number" ></ion-input>
+            <ion-label>m3</ion-label>
+            <ion-input type="number" ></ion-input>
+          </ion-item>
+          <ion-item>
+            0.5
+            <ion-label>p3</ion-label>
+            <ion-input type="number" ></ion-input>
+            <ion-label>m3</ion-label>
+            <ion-input type="number" ></ion-input>
+          </ion-item>
+         
+        </ion-card-content>
+      </ion-card> 
+
+    </ion-item>
+  </ion-list>
+
+ 
+</ion-content>

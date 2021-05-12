@@ -1,0 +1,7 @@
+{
+  "name": "sac",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

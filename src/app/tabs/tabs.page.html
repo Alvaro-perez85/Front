@@ -1,0 +1,67 @@
+<ion-tabs  >
+
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="main">
+      <ion-icon name="folder"></ion-icon>
+      <ion-label>Datos</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="particles" *ngIf="hasParticles">
+      <ion-icon name="keypad"></ion-icon>
+      <ion-label>Particulas</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="velocities"  *ngIf="hasVelocities">
+      <ion-icon name="speedometer"></ion-icon>
+      <ion-label>Velocidades</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="preasures"  *ngIf="hasPreasures">
+      <ion-icon name="cube"></ion-icon>
+      <ion-label>Presiones</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="barriers" *ngIf="hasBarriers" >
+      <ion-icon name="pause"></ion-icon>
+      <ion-label>Barreras</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="recirculations" *ngIf="hasRecirculations" >
+      <ion-icon name="sync"></ion-icon>
+      <ion-label>Recirculaciones</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="gases"  *ngIf="hasGases"  >
+      <ion-icon name="pause"></ion-icon>
+      <ion-label>Gases</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="flows"  *ngIf="hasFlows"  >
+      <ion-icon name="sync"></ion-icon>
+      <ion-label>Caudal</ion-label>
+    </ion-tab-button>
+
+
+    <!--
+      <ion-tab-button tab="tab1">
+      <ion-icon name="triangle"></ion-icon>
+      <ion-label>Tab 1</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab2">
+      <ion-icon name="ellipse"></ion-icon>
+      <ion-label>Tab 2</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3">
+      <ion-icon name="square"></ion-icon>
+      <ion-label>Tab 3</ion-label>
+      </ion-tab-button>
+    -->
+  </ion-tab-bar>
+
+   
+    
+
+</ion-tabs>

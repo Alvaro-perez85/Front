@@ -1,0 +1,78 @@
+
+<h3>Datos cálculo puntos de muestra</h3>
+<form [formGroup]="velocitiesForm" >  
+ 
+  <div class="container" >
+    <div class="row">
+      <div class="col">
+        <ion-label >Media Laminaridad</ion-label>
+    <ion-input  type="number" formControlName="MediaLaminaridad"></ion-input>
+      </div>
+      <div class="col">
+        <ion-label >Factor Cobertura</ion-label>
+        <ion-input  type="number" formControlName="FactorCobertura"></ion-input>
+      </div>
+      <div class="col">
+        <ion-label >Entrada Area</ion-label>
+        <ion-input  type="number" formControlName="EntradaArea"></ion-input>
+      </div>
+      <div class="col">
+        <ion-label >Velocidad Aire Salida</ion-label>
+        <ion-input  type="number" formControlName="VelAireSalida"></ion-input>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ion-label >Comentario</ion-label>
+      <ion-textarea formControlName="Comentario"></ion-textarea>
+    </div>
+  </div>
+
+</form> 
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ion-label>Número de puntos {{numberPoints}}</ion-label>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-outline-success" (click)="addDetalle()">añadir punto </button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger" (click)="removeDetalle()">quitar punto </button>
+    </div>
+  </div>
+</div>
+
+
+
+<ion-list padding *ngFor="let detalle of Detalles?.controls;let i = index">
+  <ng-container [formGroup]="castAsFormGroup(detalle)"> 
+  <ion-item >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Punto {{i}}</ion-card-subtitle>          
+      </ion-card-header>    
+    
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Punto Medición</ion-label>
+          <ion-input type="number" formControlName="PuntoMedicion" ></ion-input>
+        </ion-item>
+        <ion-item>
+         
+          <ion-label>Medición</ion-label>
+          <ion-input type="number" formControlName="Medicion"></ion-input>
+        </ion-item>
+       
+      </ion-card-content>
+    </ion-card> 
+
+  </ion-item>
+  </ng-container>
+</ion-list>
+
+
