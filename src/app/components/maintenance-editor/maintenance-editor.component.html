@@ -1,4 +1,5 @@
-
+<!--desde aquí hasta el segundo comentario se estilasn los elmentos de cabecera del detalle de producto
+(correo electronico, lugar, etc)-->
 <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent" [popoverTitle]="popTitle">
   ?
 </button>
@@ -15,7 +16,11 @@
   <button type="button" (click)="updateMaintenance()">copiar datos </button>
 </ng-template> 
 
-
+<!--aqui estan las opciones de datos, genrales, particulas, laminaridad, etc etc. Dentro de cada li, 
+  hay elementos llamados por ejemplo, app-laminarity: esto significa que toda la información de laminarity 
+  está en una carpeta, que corresponde a lamminarity.component.html, que lo encuentras en el árbold e al izquierda, 
+  funciona así con todas las pastañas salvo con datos generales, que está dentro del mismo li/*
+-->
 
 <div class="d-flex">
   <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
